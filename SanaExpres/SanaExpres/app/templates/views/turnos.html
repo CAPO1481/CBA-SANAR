@@ -1,0 +1,67 @@
+{% extends 'views/base.html' %}
+
+{% block contenido %}
+
+    <section class="pantalla_turnos">
+        <h1 class="titulo">Turnos</h1>
+        <div class="formulario_contenido">
+
+            <div class="enlace_administrador_registro_turno">
+                <a href="{% url 'asignacion_turnos' %}" class="boton parrafo_formulario">Asignar Turno</a>
+            </div>
+            
+            <h2 class="subtitulo">Filtrar por:</h2>
+            <form >
+                <label class="campo_label parrafo_formulario" for="">Documento</label>
+                <input type="number" class="campo_input parrafo_formulario"> 
+                
+                <label class="campo_label parrafo_formulario" for="">Nombre</label>
+                <input type="text" class="campo_input parrafo_formulario">
+                
+                <label class="campo_label parrafo_formulario" for="">Especialidad</label>
+                <input type="text" class="campo_input parrafo_formulario">
+                
+                <label class="campo_label parrafo_formulario" for="nombre">Fecha</label>
+                <label class="campo_label parrafo_formulario" for="nombre">Desde:</label>
+                <input class="campo_input parrafo_formulario" type="date">
+                <label class="campo_label parrafo_formulario" for="nombre">Hasta:</label>
+                <input class="campo_input parrafo_formulario" type="date">
+                
+                <input type="submit" class="boton parrafo_formulario" value="Buscar">
+            </form>
+        </div>
+
+        <div class="formato_tabla_turnos">
+            <table class="tabla_usuario">
+
+                <tr class="fila_titulo">
+                    <th class="celda_nombre subantesubtitulo">Lunes</th>
+                    <th class="celda_nombre subantesubtitulo">Martes</th>
+                    <th class="celda_nombre subantesubtitulo">Miercoles</th>
+                    <th class="celda_nombre subantesubtitulo">Jueves</th>
+                    <th class="celda_nombre subantesubtitulo">Viernes</th>
+                    <th class="celda_nombre subantesubtitulo">Sabado</th>
+                    <th class="celda_nombre subantesubtitulo">Domingo</th>
+                    <th class="celda_nombre subantesubtitulo" colspan="2">Acciones</th>
+                </tr>
+
+                <tr class="fila_titulo">
+                    <td class="celda_info parrafo"></td>
+                    <td class="celda_info parrafo"></td>
+                    <td class="celda_info parrafo"></td>
+                    <td class="celda_info parrafo"></td>
+                    <td class="celda_info parrafo"></td>
+                    <td class="celda_info parrafo"></td>
+                    <td class="celda_info parrafo"></td>
+                    <td class="celda_info parrafo"><a href="" class="enlace_lista">Editar</a></td>
+                    <td class="celda_info parrafo"><a href="" class="enlace_lista">Eliminar</a></td>
+                </tr>
+            </table>
+            
+            <a href="administrador_registro-usuarios.html" class="boton parrafo_formulario" download="">Descargar Archivo PDF</a>
+                <a href="administrador_registro-usuarios.html" class="boton parrafo_formulario" download="">Descargar Archivo Excel</a>
+        </div>
+    </section>
+
+        
+{% endblock  %}
