@@ -13,6 +13,8 @@ def index(request):
 
 def usuarios1(request):
     usuario= usuarios.objects.all()
+    if request.method == "POST": 
+        usuario = usuarios.objects.filter(Nombre = request.POST["Nombre"])
     data = {
         'usuario' : usuario
     }
