@@ -1,0 +1,95 @@
+{% extends 'views/base.html' %}
+
+{% block contenido %}
+    
+      <div class="registro_usuarios">
+        <a href="/turnos/" class="boton parrafo_formulario">Volver</a>
+        <div class="formulario_contenido">
+
+          <h1 class="titulo">Registro Turnos</h1>
+          <form class="registrar_formulario" method="POST"> {% csrf_token %}
+
+            <label class="campo_label parrafo_formulario" for="Servicio">Servicio Solicitado</label>
+            <select name="Servicio" id="" class="campo_input parrafo_formulario cargo_input">
+              <option value="" selected></option>
+              <option value="Cancerología" >Cancerología</option>
+              <option value="Cardiología" >Cardiología</option>
+              <option value="Cirugía general" >Cirugía general</option>
+              <option value="Cirugía de Tórax" >Cirugía de Tórax</option>
+              <option value="Coloproctología" >Coloproctología</option>
+              <option value="Dermatología" >Dermatología</option>
+              <option value="Endocrinología" >Endocrinología</option>
+              <option value="Gastroenterología" >Gastroenterología</option>
+              <option value="Hepatología" >Hepatología</option>
+              <option value="Infectología" >Infectología</option>
+              <option value="Medicina interna" >Medicina interna</option>
+              <option value="Nefrología" >Nefrología</option>
+              <option value="Neumología" >Neumología</option>
+              <option value="Neurología" >Neurología</option>
+              <option value="Oftalmología" >Oftalmología</option>
+              <option value="Ortopedia" >Ortopedia</option>
+              <option value="Patología" >Patología</option>
+              <option value="Radiología" >Radiología</option>
+              <option value="Reumatología" >Reumatología</option>
+              <option value="Toxicología" >Toxicología</option>
+              <option value="Urgencias" >Urgencias </option>
+              <option value="Urología" >Urología</option>
+            </select>
+
+            <label class="campo_label parrafo_formulario" for="fecha nacimiento">Especialidad</label>
+            <input class="campo_input parrafo_formulario" type="text" placeholder="" required name="Especialidad">
+
+            <label class="campo_label parrafo_formulario" for="nombre">Empleado</label>
+            <select name="Empleado" id="" class="campo_input parrafo_formulario cargo_input" required>
+              <option value="" selected></option>
+            {% for u in usuario %}
+              <option value="{{u.Nombre}}" selected for="Empleado"> {{u.Nombre}} </option>
+            {% endfor %}
+              <option value="" selected ></option>
+            </select>
+      
+            <label class="campo_label-2 parrafo_formulario" for="Fecha">Fecha</label>
+            <label class="campo_label relleno" for="Fecha">.</label>
+            <label class="campo_label parrafo_formulario" for="Fecha_inicio">Desde:</label>
+            <input class="campo_input parrafo_formulario" type="date" name="Fecha_inicio">
+            <label class="campo_label parrafo_formulario" for="Fecha_fin">Hasta:</label>
+            <input class="campo_input parrafo_formulario" type="date" name="Fecha_fin">
+            
+            <label class="campo_label parrafo_formulario" for="Horario">Horario</label>
+            <label class="campo_label relleno" for="Horario">.</label>
+            <label class="campo_label parrafo_formulario" for="Horario_inicio">Desde:</label>
+            <input class="campo_input parrafo_formulario" type="time" name="Horario_inicio">
+            <label class="campo_label parrafo_formulario" for="Horario_fin">Hasta:</label>
+            <input class="campo_input parrafo_formulario" type="time" name="Horario_fin">
+            
+            <label class="campo_label parrafo_formulario" for="Descanso">Días de Descanso </label required="2">
+            <label class="campo_label relleno" for="Descanso">.</label>
+
+              <label class="campo_label parrafo_formulario" for="Descanso">Lunes y Jueves</label >
+              <input class="campo_input parrafo_formulario" name="Descanso" value="Lunes y Jueves" type="checkbox" placeholder="">
+
+              <label class="campo_label parrafo_formulario" for="Descanso">Martes y Sabado</label>
+              <input class="campo_input parrafo_formulario" name="Descanso" value="Martes y Sabado" type="checkbox" placeholder="">
+
+              <label class="campo_label parrafo_formulario" for="Descanso">Miercoles y Viernes</label>
+              <input class="campo_input parrafo_formulario" name="Descanso" value="Miercoles y Viernes" type="checkbox" placeholder="">
+
+              <label class="campo_label parrafo_formulario" for="Descanso">Jueves y Domingo</label>
+              <input class="campo_input parrafo_formulario" name="Descanso" value="Jueves y Domingo" type="checkbox" placeholder="">
+
+              <label class="campo_label parrafo_formulario" for="Descanso">Viernes y Lunes</label>
+              <input class="campo_input parrafo_formulario" name="Descanso" value="Viernes y Lunes" type="checkbox" placeholder="">
+
+              <label class="campo_label parrafo_formulario" for="Descanso">Sabado y Jueves</label>
+              <input class="campo_input parrafo_formulario" name="Descanso" value="Sabado y Jueves" type="checkbox" placeholder="">
+
+              <label class="campo_label parrafo_formulario" for="Descanso">Domingo y Miercoles</label>
+              <input class="campo_input parrafo_formulario" name="Descanso" value="Domingo y Miercoles" type="checkbox" placeholder="">
+            
+            <input type="submit" class="boton parrafo_formulario" value="Guardar">
+          </form>
+        </div>
+
+        
+          
+{% endblock  %}

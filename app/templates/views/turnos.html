@@ -1,0 +1,73 @@
+{% extends 'views/base.html' %}
+
+{% block contenido %}
+
+    <section class="pantalla_turnos">
+        <h1 class="titulo">Turnos</h1>
+        <div class="formulario_contenido">
+
+            <div class="enlace_administrador_registro_turno">
+                <a href="/asignar/" class="boton parrafo_formulario">Asignar Turno</a>
+            </div>
+            
+            <h2 class="subtitulo">Filtrar por:</h2>
+            <form class="formulario_filtro-turnos" method="POST"> {% csrf_token %} 
+                <label class="campo_label parrafo_formulario" for="">Servicio</label>
+                <input type="text" class="campo_input parrafo_formulario" name="Servicio"> 
+                
+                <label class="campo_label parrafo_formulario" for="">Empleado</label>
+                <input type="text" class="campo_input parrafo_formulario" name="Empleado">
+                
+                <label class="campo_label parrafo_formulario" for="">Especialidad</label>
+                <input type="text" class="campo_input parrafo_formulario" name="Especialidad">
+                
+                <label class="campo_label parrafo_formulario" for="nombre">Fecha</label>
+                <label class="campo_label parrafo_formulario" for="nombre">Desde:</label>
+                <input class="campo_input parrafo_formulario" type="date">
+                <label class="campo_label parrafo_formulario" for="nombre">Hasta:</label>
+                <input class="campo_input parrafo_formulario" type="date">
+                
+                <input type="submit" class="boton parrafo_blanco" value="Buscar">
+            </form>
+        </div>
+
+        <div class="formato_tabla_turnos">
+            <table class="tabla_usuario">
+
+                <tr class="fila_titulo">
+                    <th class="celda_nombre subantesubtitulo">ID</th>
+                    <th class="celda_nombre subantesubtitulo">Servicio</th>
+                    <th class="celda_nombre subantesubtitulo">Especialidad</th>
+                    <th class="celda_nombre subantesubtitulo">Empleado</th>
+                    <th class="celda_nombre subantesubtitulo">Fecha Incio</th>
+                    <th class="celda_nombre subantesubtitulo">Fecha Fin</th>
+                    <th class="celda_nombre subantesubtitulo">Horario Inicio</th>
+                    <th class="celda_nombre subantesubtitulo">Horario Fin</th>
+                    <th class="celda_nombre subantesubtitulo">Descanso</th>
+                    <th class="celda_nombre subantesubtitulo" colspan="2">Acciones</th>
+                </tr>
+
+                {% for u in turnos %}
+                <tr class="fila_datos">
+                    <td class="celda_info parrafo">{{u.id}}</td>
+                    <td class="celda_info parrafo">{{u.Servicio}}</td>
+                    <td class="celda_info parrafo">{{u.Especialidad}}</td>
+                    <td class="celda_info parrafo">{{u.Empleado}}</td>
+                    <td class="celda_info parrafo">{{u.Fecha_inicio}}</td>
+                    <td class="celda_info parrafo">{{u.Fecha_fin}}</td>
+                    <td class="celda_info parrafo">{{u.Horario_inicio}}</td>
+                    <td class="celda_info parrafo">{{u.Horario_fin}}</td>
+                    <td class="celda_info parrafo">{{u.Descanso}}</td>
+                    <td class="celda_enlace"><a href="" class="enlace_lista">Editar</a></td>
+                    <td class="celda_enlace"><a href="" class="enlace_lista">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+            <a href="/turnos/" class="boton parrafo_formulario" download="">Descargar Archivo PDF</a>
+                <a href="/turnos/" class="boton parrafo_formulario" download="">Descargar Archivo Excel</a>
+        </div>
+    </section>
+
+        
+{% endblock  %}

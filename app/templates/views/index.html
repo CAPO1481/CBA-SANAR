@@ -1,0 +1,28 @@
+{% extends 'views/base.html' %}
+
+{% block contenido %}
+
+{% load static %}
+
+<h1 class="titulo">Bienvenido señor</h1>
+
+<img class="img_resumen" src="{% static 'assets/img/resumen.png' %}" alt="">
+
+<table class="tabla" border-collapsed="2px">
+      
+    <tr class="fila_resumen">
+      <th class="celda_info parrafo">Los usuarios registrados son:</th>
+      <th class="celda_info parrafo"></th>
+    </tr>
+    
+    
+    <tr class="fila_resumen">
+      <th class="celda_info parrafo">Los turnos asignados son:</th>
+      <th class="celda_info parrafo"></th>
+    </tr>
+    
+
+  </table>
+
+
+{% endblock  %}
