@@ -6,28 +6,32 @@
 
     {% load static %}
 
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}" />
+    <link  rel = "icon"  href = "{% static 'assets/img/logo.png' %}"  type = "image / x-icon" >
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"rel="stylesheet" />
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}" />
     <title>SanaExpres</title>
   </head>
   <body>
     <header class="header">
+        <div class="header_ingresar">
             <div class="logotipo">
-                <a href="/index/" class="logo_img">
-                    <img class="" src="../assets/img/logo.png" alt="">
+                <a href="/ingresar/" class="">
+                    <img class="logo_img" src="{% static 'assets/img/logo.png' %}" alt="">
                 </a>
-                <a href="/index/" class="texto_logo">
+                <a href="/ingresar/" class="texto_logo">
                     <h1 class="texto_logo">SanaExpres</h1>
                 </a>
             </div>
+            
     </header>
+      
+    <main class="contenedor">
 
-    <main class="contenedor_">
         <div class="formulario_contenido">
-            <h1 class="titulo">Ingreso Usuarios</h1>
+            <h1 class="titulo_ingresar">Ingreso Usuarios</h1>
 
             <form class="ingresar_formulario">
                 
@@ -41,6 +45,7 @@
             </form>
             
         </div>
+
     </main>
 
     <footer class="footer">
@@ -49,10 +54,10 @@
           <p class="parrafo">@2021 SanaExpres - Todos los derechos reservados</p>
       </div>
       <div class="logotipo_footer">
-          <a href="/index/" class="logo_img">
-              <img class="logo_footer" src="../assets/img/logo.png" alt="">
+          <a href="/ingresar/" class="">
+            <img class="logo_footer" src="{% static 'assets/img/logo.png' %}" alt="">
           </a>
-          <a href="/index/" class="texto_logo">
+          <a href="/ingresar/" class="texto_logo">
               <h1 class="texto_logo-footer">SanaExpres</h1>
           </a>
       </div>

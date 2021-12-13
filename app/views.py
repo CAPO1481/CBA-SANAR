@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from app.models import usuarios, turnos
+from django.utils.timezone import datetime
 
 def base(request):
     return render(request, 'views/base.html')
@@ -9,7 +10,13 @@ def ingresar(request):
 
 
 def index(request):
-    return render(request, 'views/index.html')
+    usuariosReg = len(usuarios.objects.all())
+    turnosAsig = len(turnos.objects.all())
+    ctx = {
+        'cantUsuarios':usuariosReg,
+        'cantTurnos':turnosAsig
+    }
+    return render(request, 'views/index.html', ctx)
 
 def usuarios1(request):
     usuario = usuarios.objects.all()
@@ -20,8 +27,20 @@ def usuarios1(request):
             if request.POST["Usuario"] and request.POST["Nombre"]:
                 usuario = usuarios.objects.filter(Usuario = request.POST["Usuario"], Nombre = request.POST["Nombre"])
             else:
-                if request.POST["Usuario"]:
-                    usuario = usuarios.objects.filter(Usuario = request.POST["Usuario"])
+                if request.POST["Usuario"] and request.POST["Especialidad"]:
+                    usuario = usuarios.objects.filter(Usuario = request.POST["Usuario"], Especialidad = request.POST["Especialidad"])
+                else:
+                    if request.POST["Nombre"] and request.POST["Especialidad"]:
+                        usuario = usuarios.objects.filter(Nombre = request.POST["Nombre"], Especialidad = request.POST["Especialidad"])
+                    else:
+                        if request.POST["Usuario"]:
+                            usuario = usuarios.objects.filter(Usuario = request.POST["Usuario"])
+                        else:
+                            if request.POST["Nombre"]:
+                                usuario = usuarios.objects.filter(Nombre = request.POST["Nombre"])
+                            else:
+                                if request.POST["Especialidad"]:
+                                    usuario = usuarios.objects.filter(Especialidad = request.POST["Especialidad"])
     data = {
         'usuario' : usuario
     }
@@ -32,12 +51,90 @@ def regUsers(request):
     return render(request, 'views/regUsuarios.html')
 
 def turnos1(request):
+    fecha = ""
     turno = turnos.objects.all()
     if request.method == "POST": 
-        asignacion = turnos.objects.filter(Servicio = request.POST["Servicio"], Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"], Fecha_inicio = request.POST["Fecha_inicio"], Fecha_fin = request.POST["Fecha_fin"])
-    
+        if request.POST["Servicio"] and request.POST["Empleado"] and request.POST["Especialidad"] and request.POST["Fecha_inicio"] and request.POST["Fecha_fin"]:
+            turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'), Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y-%m-%d'))
+        else:
+            if request.POST["Servicio"] and request.POST["Empleado"] and request.POST["Especialidad"] and request.POST["Fecha_inicio"]:
+              turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'))  
+            else:
+                if request.POST["Servicio"] and request.POST["Especialidad"] and request.POST["Fecha_inicio"] and request.POST["Fecha_fin"]:
+                    turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'), Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d')) 
+                else:
+                    if request.POST["Servicio"] and request.POST["Empleado"] and request.POST["Fecha_inicio"] and request.POST["Fecha_fin"]:
+                        turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Empleado = request.POST["Empleado"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'), Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                    else:
+                        if request.POST["Servicio"] and request.POST["Empleado"] and request.POST["Especialidad"] and request.POST["Fecha_fin"]:
+                            turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"], Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                        else:
+                            if request.POST["Empleado"] and request.POST["Especialidad"] and request.POST["Fecha_inicio"] and request.POST["Fecha_fin"]:
+                                turno = turnos.objects.filter(Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'), Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                            else:
+                                if request.POST["Servicio"] and request.POST["Empleado"] and request.POST["Especialidad"]:
+                                    turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"])
+                                else:
+                                    if request.POST["Servicio"] and request.POST["Empleado"] and request.POST["Fecha_inicio"]:
+                                        turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Empleado = request.POST["Empleado"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'))
+                                    else:
+                                        if request.POST["Servicio"] and request.POST["Empleado"] and request.POST["Especialidad"] and request.POST["Fecha_inicio"] and request.POST["Fecha_fin"]:
+                                            turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'), Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                                        else:
+                                            if request.POST["Servicio"] and request.POST["Especialidad"] and request.POST["Fecha_inicio"]:
+                                                turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Especialidad = request.POST["Especialidad"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'))
+                                            else:
+                                                if request.POST["Servicio"] and request.POST["Especialidad"] and request.POST["Fecha_fin"]:
+                                                    turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Especialidad = request.POST["Especialidad"], Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                                                else:
+                                                    if request.POST["Servicio"] and request.POST["Fecha_inicio"] and request.POST["Fecha_fin"]:
+                                                        turno = turnos.objects.filter(Servicio = request.POST["Servicio"],  Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'), Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                                                    else:
+                                                        if request.POST["Empleado"] and request.POST["Especialidad"] and request.POST["Fecha_inicio"]:
+                                                            turno = turnos.objects.filter(Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'))
+                                                        else:
+                                                            if request.POST["Empleado"] and request.POST["Especialidad"] and request.POST["Fecha_fin"]:
+                                                                turno = turnos.objects.filter(Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"], Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                                                            else:
+                                                                if request.POST["Empleado"] and request.POST["Fecha_inicio"] and request.POST["Fecha_fin"]:
+                                                                    turno = turnos.objects.filter(Empleado = request.POST["Empleado"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'), Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                                                                else:
+                                                                    if request.POST["Especialidad"] and request.POST["Fecha_inicio"] and request.POST["Fecha_fin"]:
+                                                                        turno = turnos.objects.filter(Especialidad = request.POST["Especialidad"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'), Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                                                                    else:
+                                                                        if request.POST["Servicio"] and request.POST["Empleado"]:
+                                                                            turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Empleado = request.POST["Empleado"])
+                                                                        else:
+                                                                            if request.POST["Servicio"] and request.POST["Especialidad"]:
+                                                                                turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Especialidad = request.POST["Especialidad"])
+                                                                            else:
+                                                                                if request.POST["Servicio"] and request.POST["Fecha_inicio"]:
+                                                                                    turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'))
+                                                                                else:
+                                                                                    if request.POST["Servicio"] and request.POST["Fecha_fin"]:
+                                                                                        turno = turnos.objects.filter(Servicio = request.POST["Servicio"], Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                                                                                    else:
+                                                                                        if request.POST["Empleado"] and request.POST["Especialidad"]:
+                                                                                            turno = turnos.objects.filter(Empleado = request.POST["Empleado"], Especialidad = request.POST["Especialidad"])
+                                                                                        else:
+                                                                                            if request.POST["Empleado"] and  request.POST["Fecha_inicio"] :
+                                                                                                turno = turnos.objects.filter(Empleado = request.POST["Empleado"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'))
+                                                                                            else:
+                                                                                                if request.POST["Empleado"] and request.POST["Fecha_fin"]:
+                                                                                                    turno = turnos.objects.filter(Empleado = request.POST["Empleado"], Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                                                                                                else:
+                                                                                                    if request.POST["Especialidad"] and request.POST["Fecha_inicio"]:
+                                                                                                        turno = turnos.objects.filter(Especialidad = request.POST["Especialidad"], Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'))
+                                                                                                    else:
+                                                                                                        if request.POST["Especialidad"] and request.POST["Fecha_fin"]:
+                                                                                                            turno = turnos.objects.filter(Especialidad = request.POST["Especialidad"], Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                                                                                                        else:
+                                                                                                            if request.POST["Fecha_inicio"] and request.POST["Fecha_fin"]:
+                                                                                                                turno = turnos.objects.filter( Fecha_inicio = datetime.strptime(request.POST["Fecha_inicio"],'%Y-%m-%d'), Fecha_fin = datetime.strptime(request.POST["Fecha_fin"],'%Y/%m/%d'))
+                                        
     data = {
-        'turnos' : turno
+        'turnos' : turno,
+        'fecha' : fecha
     }
     return render(request, 'views/turnos.html', data)
 

@@ -356,6 +356,12 @@ html{
     border-radius: 50%;
 }
 
+.header_ingresar{
+    height: 50px;
+    width: 100%;
+    background-color: #000;
+}
+
 .relleno{
     color: var(--blanco);
     cursor:default;
